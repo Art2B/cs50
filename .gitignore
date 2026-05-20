@@ -1,0 +1,7 @@
+# 1. Ignore everything in the directory
+*
+
+# 2. Whitelist your source code and build configurations
+!*.c
+!Makefile
+!.gitignore
