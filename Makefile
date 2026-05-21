@@ -16,3 +16,5 @@ readability: readability.c
 	$(CC) $(CFLAGS) readability.c -o readability $(LDLIBS)
 caesar: caesar.c
 	$(CC) $(CFLAGS) caesar.c -o caesar $(LDLIBS)
+substitution: substitution.c
+	$(CC) $(CFLAGS) substitution.c -o substitution $(LDLIBS)
