@@ -14,3 +14,5 @@ scrabble: scrabble.c
 	$(CC) $(CFLAGS) scrabble.c -o scrabble $(LDLIBS)
 readability: readability.c
 	$(CC) $(CFLAGS) readability.c -o readability $(LDLIBS)
+caesar: caesar.c
+	$(CC) $(CFLAGS) caesar.c -o caesar $(LDLIBS)
