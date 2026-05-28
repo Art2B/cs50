@@ -6,3 +6,6 @@
 !Makefile
 !.gitignore
 !README.md
+
+# Unwhitelist all c code starting with _
+_*.c

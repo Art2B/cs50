@@ -18,3 +18,7 @@ caesar: caesar.c
 	$(CC) $(CFLAGS) caesar.c -o caesar $(LDLIBS)
 substitution: substitution.c
 	$(CC) $(CFLAGS) substitution.c -o substitution $(LDLIBS)
+plurality: plurality.c
+	$(CC) $(CFLAGS) plurality.c -o plurality $(LDLIBS)
+runoff: runoff.c
+	$(CC) $(CFLAGS) runoff.c -o runoff $(LDLIBS)
