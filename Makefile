@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Werror
+CFLAGS = -g -Wall -Werror
 LDLIBS = -lcs50 -lm
 
 hello_world: hello_world.c
@@ -22,3 +22,5 @@ plurality: plurality.c
 	$(CC) $(CFLAGS) plurality.c -o plurality $(LDLIBS)
 runoff: runoff.c
 	$(CC) $(CFLAGS) runoff.c -o runoff $(LDLIBS)
+tideman: tideman.c
+	$(CC) $(CFLAGS) tideman.c -o tideman $(LDLIBS)
