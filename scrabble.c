@@ -32,7 +32,7 @@ int main (void)
 
 string sanitize_input(string s)
 {
-  for (int i=0; i<strlen(s); i++) {
+  for (int i=0, n=strlen(s); i<n; i++) {
     s[i] = tolower(s[i]);
   }
 
@@ -43,7 +43,7 @@ int get_word_score(string s)
 {
   int total = 0;
 
-  for (int i=0; i<strlen(s); i++)
+  for (int i=0, n=strlen(s); i<n; i++)
   {
     total += get_char_score(s[i]);
   }

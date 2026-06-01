@@ -45,7 +45,7 @@ string caesar_encrypt(string s, int k)
 {
   int shift = k % 26;
 
-  for(int i=0; i<strlen(s); i++)
+  for(int i=0, n = strlen(s); i<n; i++)
   {
     // Handle latin uppercase
     if (s[i] >= 65 && s[i] <= 90)
@@ -66,7 +66,7 @@ string caesar_decrypt(string s, int k)
 {
   int shift = k % 26;
 
-  for(int i=0; i<strlen(s); i++)
+  for(int i=0, n = strlen(s); i<n; i++)
   {
     // Handle latin uppercase
     if (s[i] >= 65 && s[i] <= 90)
@@ -86,9 +86,7 @@ string caesar_decrypt(string s, int k)
 int parse_number(string s)
 {
   int n = 0;
-  int s_length = strlen(s);
-
-  for (int i=0; i<s_length; i++)
+  for (int i=0, s_length = strlen(s); i<s_length; i++)
   {
     if (s[i] < 48 || s[i] > 57)
     {

@@ -53,7 +53,7 @@ int get_nb_sentences(string s)
 {
   int nb_sentences = 0;
 
-  for (int i=0; i<strlen(s); i++)
+  for (int i=0, n=strlen(s); i<n; i++)
   {
     if(is_char_sentence_stop(s[i]))
     {

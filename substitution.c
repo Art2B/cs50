@@ -46,7 +46,7 @@ int main (int argc, string argv[])
 }
 
 string substitution_encrypt(string s, char key[key_length]) {
-  for (int i=0; i<strlen(s); i++) {
+  for (int i=0, n=strlen(s); i<n; i++) {
     if (s[i] >= 65 && s[i] <= 90) {
       s[i] = toupper(key[s[i] - 65]);
     } else if (s[i] >= 97 && s[i] <= 122) {
@@ -64,7 +64,7 @@ string substitution_decrypt(string s, char key[key_length]) {
     reversed_keys[key[i] - 65] = i + 65;
   }
 
-  for (int i=0; i<strlen(s); i++) {
+  for (int i=0, n=strlen(s); i<n; i++) {
     if (s[i] >= 65 && s[i] <= 90) {
       s[i] = toupper(reversed_keys[s[i] - 65]);
     } else if (s[i] >= 97 && s[i] <= 122) {
@@ -80,7 +80,7 @@ bool is_key_valid(string s) {
   int total = 351;
   int key_total;
 
-  for(int i=0; i<strlen(s); i++) {
+  for(int i=0, n=strlen(s); i<n; i++) {
     if (s[i] >= 65 && s[i] <= 90) {
       key_total += s[i] - 65 + 1;
     }
