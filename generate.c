@@ -24,6 +24,18 @@ int main(int argc, char** argv) {
     return 1;
   }
 
+  // Open boilerplate files
+  FILE* makefile = fopen("./.boilerplate/Makefile", "r");
+  if (makefile == NULL) {
+    printf("Generator ERROR: cannot open .boilerplate/Makefile");
+    return 2;
+  }
+  FILE* main_file = fopen("./.boilerplate/main.c", "r");
+  if (main_file == NULL) {
+    printf("Generator ERROR: cannot open boilerplate/main.c");
+    return 2;
+  }
+
   for(int i=1; i<argc; i++) {
     // Check if name contains only alphabetical, numbers, - or _
     size_t nmatch = 1;
@@ -46,12 +58,6 @@ int main(int argc, char** argv) {
     // Generate folder
     mkdir(folderPath, 0700);
 
-    FILE* makefile = fopen("./.boilerplate/Makefile", "r");
-    if (makefile == NULL) {
-      printf("Generator ERROR: cannot open .boilerplate/Makefile");
-      return 2;
-    }
-
     // Generate path for makefile
     char makefile_output_path[528]; 
     snprintf(makefile_output_path, sizeof(makefile_output_path), "%s/Makefile", folderPath);
@@ -62,6 +68,10 @@ int main(int argc, char** argv) {
     bstring new_name = bfromcstr(argv[i]);
 
     char makefile_string[100];
+    // Reset file stream position
+    if (ftell(makefile) != 0) {
+      fseek(makefile, 0, SEEK_SET);
+    }
     while(fgets(makefile_string, 100, makefile)) {
       bstring mfs = bfromcstr(makefile_string);
       int position = binstr(mfs, 0, to_replace);
@@ -81,32 +91,30 @@ int main(int argc, char** argv) {
     // Close/clear strings and files
     bdestroy(to_replace);
     bdestroy(new_name);
-    fclose(makefile);
     fclose(makefile_output);
-
-    // Copy boilerplate of main.c
-    FILE* main_file = fopen("./.boilerplate/main.c", "r");
-    if (main_file == NULL) {
-      printf("Generator ERROR: cannot open boilerplate/main.c");
-      return 2;
-    }
 
     char mf_output_file[1027]; 
     snprintf(mf_output_file, sizeof(mf_output_file), "%s/%s.c", folderPath, argv[i]);
 
     FILE* mf_output = fopen(mf_output_file, "a");
     char mf_string[100];
+    // Reset file stream position
+    if (ftell(main_file) != 0) {
+      fseek(main_file, 0, SEEK_SET);
+    }
     while(fgets(mf_string, 100, main_file)) {
       fprintf(mf_output, "%s", mf_string);
     }
 
     // Close main.c file
-    fclose(main_file);
     fclose(mf_output);
 
     printf("Generated boilerplate for %s\n", argv[i]);
   }
 
+  // Close files and regex
+  fclose(makefile);
+  fclose(main_file);
   regfree(&path_reg);
 
   printf("Finished generating boilerplates !\n");

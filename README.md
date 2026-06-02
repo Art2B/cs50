@@ -3,7 +3,7 @@
 
 ## Boilerplate
 I implemented a boilerplate generator to generate new projects within that folder
-* `make build` to create the generator
+* `make generator` to create the generator
 * `./generate NAME` to generate the folder
 
 ## Requirements
