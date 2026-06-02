@@ -32,6 +32,7 @@ int main(int argc, char** argv) {
   }
   FILE* main_file = fopen("./.boilerplate/main.c", "r");
   if (main_file == NULL) {
+    fclose(makefile);
     printf("Generator ERROR: cannot open boilerplate/main.c");
     return 2;
   }
