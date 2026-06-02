@@ -1,11 +1,23 @@
+#include <stddef.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include "bstrlib.h"
+#include <regex.h>
 
 int main(int argc, char** argv) {
   struct stat st = {0};
+  regex_t path_reg;
+  char *pattern = "[^A-Za-z0-9|-|_]";
+  int compiled_reg = regcomp(&path_reg, pattern, REG_EXTENDED);
+
+  if (compiled_reg != 0) {
+    char reg_error_buffer[512];
+    regerror(compiled_reg, &path_reg, reg_error_buffer, 512);
+    printf("Regex Error: %s\n", reg_error_buffer);
+    return 1;
+  }
 
   if (argc <= 1) {
     printf("Must provide at least 1 argument.\nUsage: ./generate NAME1\n");
@@ -13,6 +25,16 @@ int main(int argc, char** argv) {
   }
 
   for(int i=1; i<argc; i++) {
+    // Check if name contains only alphabetical, numbers, - or _
+    size_t nmatch = 1;
+    regmatch_t pmatch[1];
+    int reg_match = regexec(&path_reg, argv[i], nmatch, pmatch, 0);
+
+    if (reg_match != REG_NOMATCH) {
+      printf("Name: %s is not supported. Only alphabetical characters, numbers, \"-\" and \"_\" are supported. Skipping", argv[i]);
+      continue;
+    }
+
     // Generate folder path
     char folderPath[512];
     snprintf(folderPath, sizeof(folderPath), "./%s", argv[i]);
@@ -84,6 +106,8 @@ int main(int argc, char** argv) {
 
     printf("Generated boilerplate for %s\n", argv[i]);
   }
+
+  regfree(&path_reg);
 
   printf("Finished generating boilerplates !\n");
   return 0;
