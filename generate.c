@@ -9,7 +9,7 @@
 int main(int argc, char** argv) {
   struct stat st = {0};
   regex_t path_reg;
-  char *pattern = "[^A-Za-z0-9|-|_]";
+  char *pattern = "[^A-Za-z0-9_-]";
   int compiled_reg = regcomp(&path_reg, pattern, REG_EXTENDED);
 
   if (compiled_reg != 0) {
@@ -27,13 +27,13 @@ int main(int argc, char** argv) {
   // Open boilerplate files
   FILE* makefile = fopen("./.boilerplate/Makefile", "r");
   if (makefile == NULL) {
-    printf("Generator ERROR: cannot open .boilerplate/Makefile");
+    printf("Generator ERROR: cannot open .boilerplate/Makefile\n");
     return 2;
   }
   FILE* main_file = fopen("./.boilerplate/main.c", "r");
   if (main_file == NULL) {
     fclose(makefile);
-    printf("Generator ERROR: cannot open boilerplate/main.c");
+    printf("Generator ERROR: cannot open boilerplate/main.c\n");
     return 2;
   }
 
@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
     int reg_match = regexec(&path_reg, argv[i], nmatch, pmatch, 0);
 
     if (reg_match != REG_NOMATCH) {
-      printf("Name: %s is not supported. Only alphabetical characters, numbers, \"-\" and \"_\" are supported. Skipping", argv[i]);
+      printf("Name: %s is not supported. Only alphabetical characters, numbers, \"-\" and \"_\" are supported. Skipping\n", argv[i]);
       continue;
     }
 
